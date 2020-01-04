@@ -11,6 +11,7 @@ import pyttsx3
 import features
 import wolframalph
 import googlecalenderfeatures
+import googlenewsfeatures
 #import thunderstorm
 
 
@@ -91,7 +92,7 @@ if __name__ =="__main__" :
     print(features.getDate())
     while True :
         query = get_audio().lower()
-        #query = 'open my events'
+        #query = 'news headlines'
         ### Logic based on query
         if 'wikipedia' in query:
             speak('searching that on wikipedia')
@@ -116,23 +117,6 @@ if __name__ =="__main__" :
             city_name = get_audio()
             features.getweather(city_name)
 
-        elif 'please quit' in query :
-            speak('GoodBye Sir....'
-                  'hope we meet soon..')
-            sys.exit()
-
-        elif 'activate alpha' in query :
-            speak("Alpha mode activated")
-            query= get_audio()
-            while True:
-                speak(wolframalph.wolframalphafunc(query))
-                query = get_audio().lower()
-                if 'deactivate alpha' in query:
-                    speak("Alpha mode deactivated...")
-                    break
-                else:
-                    continue
-
         elif "open my events" in query :
             #googlecalenderfeatures.googleCalender()
             speak("how many event you want")
@@ -151,5 +135,27 @@ if __name__ =="__main__" :
         #         else:
         #             continue
 
+        elif "news headlines" in query:
+            news_list = googlenewsfeatures.getgooglenews(5)
+            speak("Presenting you todays headlines...")
+            for news in news_list :
+                speak(news)
+            speak("Presented todays headlines..")
 
 
+        elif 'activate alpha' in query :
+            speak("Alpha mode activated")
+            query= get_audio()
+            while True:
+                speak(wolframalph.wolframalphafunc(query))
+                query = get_audio().lower()
+                if 'deactivate alpha' in query:
+                    speak("Alpha mode deactivated...")
+                    break
+                else:
+                    continue
+
+        elif 'please quit' in query :
+            speak('GoodBye Sir....'
+                  'hope we meet soon..')
+            sys.exit()
