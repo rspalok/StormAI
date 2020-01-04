@@ -37,7 +37,7 @@ def getDate():
                       '22nd', '23rd' , '24th' , '25th' , '26th', '27th' , '28th' , '29th' , '30th' , '31st'
                      ]
 
-    return 'Today is {} {} {}'.format(ordinalNumbers[dayNum -1],MONTHS[monthNum -1],weakday)
+    return 'Today is {} of {} {}'.format(ordinalNumbers[dayNum -1],MONTHS[monthNum -1],weakday)
 
 
 def getweather(city_name):

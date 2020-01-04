@@ -1,3 +1,4 @@
+
 import os
 import sys
 import time
@@ -9,13 +10,15 @@ from gtts import gTTS
 import pyttsx3
 import features
 import wolframalph
-import thunderstorm
+import googlecalenderfeatures
+#import thunderstorm
 
 
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice',voices[0].id)
+
 
 def speak(input_text):
     # tts=gTTS(text=input_text,lang='en')
@@ -30,8 +33,8 @@ def get_audio():
     with sr.Microphone() as source:
         print("Listening...")
         r.pause_threshold = 0.7
-        r.phrase_threshold = 0.2
-        r.energy_threshold = 365
+        r.phrase_threshold = 0.3
+        r.energy_threshold = 375
         audio= r.listen(source)
         said = ''
         try:
@@ -53,13 +56,14 @@ def wishMe():
 
     hour = int(datetime.datetime.now().hour)
     if hour > 0 and hour <12 :
-        speak('Good Morning Swarnit...')
+        speak('Good Morning Sir...')
         speak('I am Storm... Your Virtal Assistant')
         speak(features.getDate())
+        speak(features.getweather('Noida'))
         speak(random.choice(HELP_GREET_RESPONSES))
 
     elif hour >=12 and hour <= 18 :
-        speak('Good Afternoon Swarnit...')
+        speak('Good Afternoon Sir...')
         speak('I am Storm.... Your Virtal Assistant')
         speak(features.getDate())
         speak(features.getweather('Noida'))
@@ -69,6 +73,7 @@ def wishMe():
         speak('Good Night Sir..')
         speak('I am Storm... Your Virtal Assistant')
         speak(features.getDate())
+        speak(features.getweather('Noida'))
         speak(random.choice(HELP_GREET_RESPONSES))
 
 def wakeWord(text):
@@ -80,12 +85,13 @@ def wakeWord(text):
 
     return False
 
+
 if __name__ =="__main__" :
     wishMe()
     print(features.getDate())
     while True :
         query = get_audio().lower()
-        #query = 'open youtube for me'
+        #query = 'open calender'
         ### Logic based on query
         if 'wikipedia' in query:
             speak('searching that on wikipedia')
@@ -117,6 +123,7 @@ if __name__ =="__main__" :
 
         elif 'activate alpha' in query :
             speak("Alpha mode activated")
+            query= get_audio()
             while True:
                 speak(wolframalph.wolframalphafunc(query))
                 query = get_audio().lower()
@@ -126,15 +133,19 @@ if __name__ =="__main__" :
                 else:
                     continue
 
-        elif 'activate thunderstorm' in query :
-            speak("Thunderstorm mode activated")
-            while True:
-                speak(thunderstorm.thunderstorm(query))
-                query = get_audio().lower()
-                if 'deactivate thunderstorm' in query:
-                    speak("Thunderstorm mode deactivated...")
-                    break
-                else:
-                    continue
+        elif "open my events" in query :
+            googlecalenderfeatures.googleCalender()
+
+        # elif 'activate thunderstorm' in query :
+        #     speak("Thunderstorm mode activated")
+        #     while True:
+        #         speak(thunderstorm.thunderstorm(query))
+        #         query = get_audio().lower()
+        #         if 'deactivate thunderstorm' in query:
+        #             speak("Thunderstorm mode deactivated...")
+        #             break
+        #         else:
+        #             continue
+
 
 

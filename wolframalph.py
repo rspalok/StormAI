@@ -1,6 +1,6 @@
 import wolframalpha
 
-wolframalpha_API_ID = 'WJTYK2-68LHU7UPU8'
+wolframalpha_API_ID = '5UQVG8-L5HU8645K8'
 
 def wolframalphafunc(query):
     try:
