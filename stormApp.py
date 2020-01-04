@@ -91,7 +91,7 @@ if __name__ =="__main__" :
     print(features.getDate())
     while True :
         query = get_audio().lower()
-        #query = 'open calender'
+        #query = 'open my events'
         ### Logic based on query
         if 'wikipedia' in query:
             speak('searching that on wikipedia')
@@ -134,7 +134,11 @@ if __name__ =="__main__" :
                     continue
 
         elif "open my events" in query :
-            googlecalenderfeatures.googleCalender()
+            #googlecalenderfeatures.googleCalender()
+            speak("how many event you want")
+            query =get_audio().lower()
+            service = googlecalenderfeatures.googleCalender()
+            googlecalenderfeatures.get_events(query, service)
 
         # elif 'activate thunderstorm' in query :
         #     speak("Thunderstorm mode activated")

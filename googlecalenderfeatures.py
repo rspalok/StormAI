@@ -36,11 +36,14 @@ def googleCalender():
 
     service = build('calendar', 'v3', credentials=creds)
 
+    return service
+
+def get_events(n,service):
     # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
+    print(f'Getting the upcoming {n} events')
     events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=10, singleEvents=True,
+                                        maxResults=n, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
 
@@ -49,3 +52,7 @@ def googleCalender():
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
         stormApp.speak(start, event['summary'])
+
+    return
+
+
