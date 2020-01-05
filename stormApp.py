@@ -136,9 +136,14 @@ if __name__ =="__main__" :
         elif "open my events" in query :
             #googlecalenderfeatures.googleCalender()
             speak("how many event you want")
-            query =get_audio().lower()
+            query = get_audio().lower()
+
             service = googlecalenderfeatures.googleCalender()
             googlecalenderfeatures.get_events(query, service)
+
+
+
+
 
         # elif 'activate thunderstorm' in query :
         #     speak("Thunderstorm mode activated")
@@ -152,4 +157,11 @@ if __name__ =="__main__" :
         #             continue
 
 
-
+        elif "save my event" in query :
+            speak("event summary sir ")
+            summary=get_audio().lower()
+            speak("start date ")
+            startDate = get_audio().lower()
+            speak("end date ")
+            endDate=get_audio().lower()
+            service =googlecalenderfeatures.setEvent(summary,startDate,endDate)
