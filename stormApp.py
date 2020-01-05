@@ -91,8 +91,8 @@ if __name__ =="__main__" :
     wishMe()
     print(features.getDate())
     while True :
-        query = get_audio().lower()
-        #query = 'news headlines'
+        #query = get_audio().lower()
+        query = 'detect language'
         ### Logic based on query
         if 'wikipedia' in query:
             speak('searching that on wikipedia')
@@ -136,9 +136,13 @@ if __name__ =="__main__" :
         #             continue
 
         elif "news headlines" in query:
-            news_list = googlenewsfeatures.getgooglenews(5)
+            Region_List = ['indian','india', 'local' ]
+            speak("Of which region")
+            region = get_audio().lower()
+            news_list = googlenewsfeatures.getgooglenews(5,region)
             speak("Presenting you todays headlines...")
             for news in news_list :
+                print(news)
                 speak(news)
             speak("Presented todays headlines..")
 
