@@ -5,11 +5,15 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from httplib2 import Http
+from oauth2client import file,client,tools
+import argparse
+from oauth2client.client import GoogleCredentials
 import stormApp
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-
+SCOPES1= ['https://www.googleapis.com/auth/calendar']
 def googleCalender():
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar
@@ -51,8 +55,41 @@ def get_events(n,service):
         stormApp.speak('No upcoming events found.')
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        stormApp.speak(start, event['summary'])
+        stormApp.speak(start + " " +event['summary'])
 
     return
 
+def setEvent(summary,startTime,endTime):
+    stormApp.speak("in side save event" + summary)
+    print("in side save event" + summary+"  "+startTime+"  "+endTime)
+    try:
+        print('in try block')
+        flags=argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+    except ImportError:
+        flags = None
+    #stormApp.speak("in side save event " + summary)
+    store=file.Storage('storage.json')
+    creds=store.get()
+    if not creds or creds.invalid:
+        flow=client.flow_from_clientsecrets('credentials.json',SCOPES1)
+        creds=tools.run_flow(flow,store,flags)\
+            if flags else tools.run(flow,store)
+    CAL=build('calendar','v3',http=creds.authorize(Http()))
 
+    EVENT={
+        'summary':summary,
+         'start': {
+            'dateTime': '2020-01-06T09:00:00-07:00',
+            'timeZone': 'America/Los_Angeles',
+          },
+            'end': {
+            'dateTime': '2020-01-06T17:00:00-07:00',
+            'timeZone': 'America/Los_Angeles',
+          }
+    }
+    event=CAL.events().insert(calendarId='primary', sendNotifications=True, body=EVENT).execute()
+
+    print(event['summary'].encode('utf-8'),
+      event['start']['dateTime'], event['end']['dateTime'])
+    # stormApp.speak((event['summary'].encde('utf-s'),
+    #                event['start']['dateTime'],event['end']['dateTime']))
