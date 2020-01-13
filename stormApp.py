@@ -12,7 +12,7 @@ import features
 import wolframalph
 import googlecalenderfeatures
 import googlenewsfeatures
-#import thunderstorm
+import thunderstorm
 
 
 
@@ -71,7 +71,7 @@ def wishMe():
         speak(random.choice(HELP_GREET_RESPONSES))
 
     else:
-        speak('Good Night Sir..')
+        speak('Good Evening Sir..')
         speak('I am Storm... Your Virtal Assistant')
         speak(features.getDate())
         speak(features.getweather('Noida'))
@@ -91,8 +91,9 @@ if __name__ =="__main__" :
     wishMe()
     print(features.getDate())
     while True :
-        #query = get_audio().lower()
-        query = 'detect language'
+        query = get_audio().lower()
+        #query = 'detect language'
+
         ### Logic based on query
         if 'wikipedia' in query:
             speak('searching that on wikipedia')
@@ -110,10 +111,16 @@ if __name__ =="__main__" :
 
         elif 'search on google' in query :
             speak('Searching that on Google...')
-            features.Googlesearch(query)
+            searchkey = query.split()
+            features.Googlesearch(searchkey[len(searchkey) -1 ])
 
-        elif 'tell me the weather' in query :
-            speak('Of Which location Sir ?')
+        elif 'close chrome' in query :
+            os.system("taskkill /f /im " + "chrome.exe")
+            speak("Closed Chrome Browser")
+
+
+        elif 'tell me weather' in query :
+            speak('of which location Sir ?')
             city_name = get_audio()
             features.getweather(city_name)
 
@@ -129,16 +136,16 @@ if __name__ =="__main__" :
 
 
 
-        # elif 'activate thunderstorm' in query :
-        #     speak("Thunderstorm mode activated")
-        #     while True:
-        #         speak(thunderstorm.thunderstorm(query))
-        #         query = get_audio().lower()
-        #         if 'deactivate thunderstorm' in query:
-        #             speak("Thunderstorm mode deactivated...")
-        #             break
-        #         else:
-        #             continue
+        elif 'activate thunderstorm' in query :
+            speak("Thunderstorm mode activated")
+            while True:
+                speak(thunderstorm.thunderstorm(query))
+                query = get_audio().lower()
+                if 'deactivate thunderstorm' in query:
+                    speak("Thunderstorm mode deactivated...")
+                    break
+                else:
+                    continue
 
         elif "news headlines" in query:
             Region_List = ['indian','india', 'local' ]
@@ -147,11 +154,11 @@ if __name__ =="__main__" :
             news_list = googlenewsfeatures.getgooglenews(5,region)
             speak("Presenting you todays headlines...")
             for news in news_list :
-                print(news)
-                speak(news)
+                    print(news)
+                    speak(news)
             speak("Presented todays headlines..")
 
-<<<<<<< HEAD
+
         elif "save my event" in query :
             speak("event summary sir ")
             summary=get_audio().lower()
@@ -160,7 +167,7 @@ if __name__ =="__main__" :
             speak("end date ")
             endDate=get_audio().lower()
             service =googlecalenderfeatures.setEvent(summary,startDate,endDate)
-=======
+
 
         elif 'activate alpha' in query :
             speak("Alpha mode activated")
@@ -174,8 +181,11 @@ if __name__ =="__main__" :
                 else:
                     continue
 
+        
+
         elif 'please quit' in query :
             speak('GoodBye Sir....'
                   'hope we meet soon..')
             sys.exit()
->>>>>>> 01e5d42c7308d85ac2e876911b27ace92df01731
+
+

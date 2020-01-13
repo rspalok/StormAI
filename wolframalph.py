@@ -1,9 +1,8 @@
 import wolframalpha
 import random
 
-wolframalpha_API_ID = '5UQVG8-L5HU8645K8'
-# wolframalpha_API_ID_list = ['id1','id2']
-# wolframalpha_API_ID = random.choices[wolframalpha_API_ID_list]
+wolframalpha_API_ID_list = ['5UQVG8-L5HU8645K8','WJTYK2-68LHU7UPU8']
+wolframalpha_API_ID = random.choice(wolframalpha_API_ID_list)
 
 def wolframalphafunc(query):
     try:

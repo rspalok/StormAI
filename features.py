@@ -4,7 +4,9 @@ import stormApp
 import requests
 import datetime
 import calendar
+import os
 from webbrowser import Chrome
+from googlesearch import search
 
 def searchonWiki(query):
     return wikipedia.summary(query,sentences='2')
@@ -15,12 +17,32 @@ def openGoogle():
 
 def openYoutube():
     webbrowser.open('www.youtube.com')
+
     return
 
 def Googlesearch(query = "What is python ?"):
     tabUrl = "http://google.com/?#q="
     webbrowser.open(tabUrl + query , new= 2)
+    links = getLinksfromgoogle(query)
+    while True :
+        query = stormApp.get_audio().lower()
+
+        if 'close chrome' in query :
+            os.system("taskkill /f /im " + "chrome.exe")
+            break
+        else :
+            continue
     return
+
+def getLinksfromgoogle(query):
+    links = []
+    for link in search(query, num=10 ,stop =10 ):
+        print(link)
+        links.append(link)
+    return links
+
+
+
 
 def getDate():
     now = datetime.datetime.now()
@@ -96,7 +118,7 @@ def getweather(city_name):
 
         # print following values
         stormApp.speak(" Currunt Temperature is " +
-                       str(int(current_temperature - 274.15) ) + "Degree Centigrades" +
+                       str(int(current_temperature - 272.15) ) + "Degree Centigrades" +
               "\n atmospheric pressure is  " +
                        str(current_pressure) +"HPA" +
               "\n humidity is " +
