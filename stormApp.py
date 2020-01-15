@@ -12,7 +12,8 @@ import features
 import wolframalph
 import googlecalenderfeatures
 import googlenewsfeatures
-import thunderstorm
+#import thunderstorm
+import googleTranslate
 
 
 
@@ -88,11 +89,11 @@ def wakeWord(text):
 
 
 if __name__ =="__main__" :
-    wishMe()
+    #wishMe()
     print(features.getDate())
     while True :
         query = get_audio().lower()
-        #query = 'detect language'
+        #query = 'how are you man?? translate it'
 
         ### Logic based on query
         if 'wikipedia' in query:
@@ -136,16 +137,16 @@ if __name__ =="__main__" :
 
 
 
-        elif 'activate thunderstorm' in query :
-            speak("Thunderstorm mode activated")
-            while True:
-                speak(thunderstorm.thunderstorm(query))
-                query = get_audio().lower()
-                if 'deactivate thunderstorm' in query:
-                    speak("Thunderstorm mode deactivated...")
-                    break
-                else:
-                    continue
+        # elif 'activate thunderstorm' in query :
+        #     speak("Thunderstorm mode activated")
+        #     while True:
+        #         speak(thunderstorm.thunderstorm(query))
+        #         query = get_audio().lower()
+        #         if 'deactivate thunderstorm' in query:
+        #             speak("Thunderstorm mode deactivated...")
+        #             break
+        #         else:
+        #             continue
 
         elif "news headlines" in query:
             Region_List = ['indian','india', 'local' ]
@@ -167,6 +168,12 @@ if __name__ =="__main__" :
             speak("end date ")
             endDate=get_audio().lower()
             service =googlecalenderfeatures.setEvent(summary,startDate,endDate)
+
+        elif "translate it" in query :
+            statement = query.replace('translate it', '')
+            speak("In which language?")
+            dest = get_audio().lower()
+            speak(googleTranslate.langTranslator(statement,dest))
 
 
         elif 'activate alpha' in query :
