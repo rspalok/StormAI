@@ -14,3 +14,4 @@ PyYAML==3.13
 chatterbot==1.0.0
 chatterbot-corpus==1.2.0
 oauth2client
+googletrans
