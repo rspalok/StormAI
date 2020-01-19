@@ -1,3 +1,6 @@
+googleapiclient
+httplib2
+requests
 SpeechRecognition
 pyttsx3
 gTTS

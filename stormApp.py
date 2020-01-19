@@ -1,4 +1,3 @@
-
 import os
 import sys
 import time
@@ -12,13 +11,13 @@ import features
 import wolframalph
 import googlecalenderfeatures
 import googlenewsfeatures
-#import thunderstorm
 
+# import thunderstorm
 
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-engine.setProperty('voice',voices[0].id)
+engine.setProperty('voice', voices[1].id)
 
 
 def speak(input_text):
@@ -29,41 +28,43 @@ def speak(input_text):
     engine.say(input_text)
     engine.runAndWait()
 
+
 def get_audio():
-    r=sr.Recognizer()
+    r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
         r.pause_threshold = 0.7
         r.phrase_threshold = 0.3
         r.energy_threshold = 375
-        audio= r.listen(source)
+        audio = r.listen(source)
         said = ''
         try:
-            said = r.recognize_google(audio,language='en-in')
+            said = r.recognize_google(audio, language='en-in')
             print("U said : " + said)
 
-        except Exception as e :
-            print("Exception: Sorry...I couldn't  recognize what u said "+str(e))
+        except Exception as e:
+            print("Exception: Sorry...I couldn't  recognize what u said " + str(e))
             (print('Say that again please ....'))
             speak('Could u please say that again ...')
-            said= get_audio()
+            said = get_audio()
     return said
 
+
 def wishMe():
-    GREETING_INPUTS = ['hi' , 'hey' , 'wassup' , 'hello']
-    GREETING_RESPONSES = ['hello' , 'hey there' ]
-    HELP_GREET_RESPONSES = ['how may I help you' , 'I am now ready to take your commands' ,
+    GREETING_INPUTS = ['hi', 'hey', 'wassup', 'hello']
+    GREETING_RESPONSES = ['hello', 'hey there']
+    HELP_GREET_RESPONSES = ['how may I help you', 'I am now ready to take your commands',
                             'Please tell me what I can do for you']
 
     hour = int(datetime.datetime.now().hour)
-    if hour > 0 and hour <12 :
+    if hour > 0 and hour < 12:
         speak('Good Morning Sir...')
         speak('I am Storm... Your Virtal Assistant')
         speak(features.getDate())
         speak(features.getweather('Noida'))
         speak(random.choice(HELP_GREET_RESPONSES))
 
-    elif hour >=12 and hour <= 18 :
+    elif hour >= 12 and hour <= 18:
         speak('Good Afternoon Sir...')
         speak('I am Storm.... Your Virtal Assistant')
         speak(features.getDate())
@@ -77,56 +78,53 @@ def wishMe():
         speak(features.getweather('Noida'))
         speak(random.choice(HELP_GREET_RESPONSES))
 
+
 def wakeWord(text):
-    WAKE_WORDS = ['hey storm' , 'okay storm' , 'hello storm']
+    WAKE_WORDS = ['hey storm', 'okay storm', 'hello storm']
     text = text.lower()
-    for phrase in WAKE_WORDS :
-        if phrase in text :
+    for phrase in WAKE_WORDS:
+        if phrase in text:
             return True
 
     return False
 
 
-if __name__ =="__main__" :
-    wishMe()
+if __name__ == "__main__":
+    #wishMe()
     print(features.getDate())
-    while True :
-        #query = get_audio().lower()
-        query = 'detect language'
+    while True:
+        # query = get_audio().lower()
+        query = 'save my event'
         ### Logic based on query
         if 'wikipedia' in query:
             speak('searching that on wikipedia')
             query = query.replace("wikipedia", "")
             wiki_result = features.searchonWiki(query)
-            speak("According to wikipedia  "+wiki_result)
+            speak("According to wikipedia  " + wiki_result)
 
-        elif 'open google' in query :
+        elif 'open google' in query:
             speak('Opening Google for you Sir')
             features.openGoogle()
 
-        elif 'open youtube' in query :
+        elif 'open youtube' in query:
             speak('opening Youtube for you Sir')
             features.openYoutube()
 
-        elif 'search on google' in query :
+        elif 'search on google' in query:
             speak('Searching that on Google...')
             features.Googlesearch(query)
 
-        elif 'tell me the weather' in query :
+        elif 'tell me the weather' in query:
             speak('Of Which location Sir ?')
             city_name = get_audio()
             features.getweather(city_name)
 
-        elif "open my events" in query :
-            #googlecalenderfeatures.googleCalender()
+        elif "open my events" in query:
+            # googlecalenderfeatures.googleCalender()
             speak("how many event you want")
             query = get_audio().lower()
-
             service = googlecalenderfeatures.googleCalender()
             googlecalenderfeatures.get_events(query, service)
-
-
-
 
 
         # elif 'activate thunderstorm' in query :
@@ -141,30 +139,32 @@ if __name__ =="__main__" :
         #             continue
 
         elif "news headlines" in query:
-            Region_List = ['indian','india', 'local' ]
+            Region_List = ['indian', 'india', 'local']
             speak("Of which region")
             region = get_audio().lower()
-            news_list = googlenewsfeatures.getgooglenews(5,region)
+            news_list = googlenewsfeatures.getgooglenews(5, region)
             speak("Presenting you todays headlines...")
-            for news in news_list :
+            for news in news_list:
                 print(news)
                 speak(news)
             speak("Presented todays headlines..")
 
-<<<<<<< HEAD
-        elif "save my event" in query :
+        elif "save my event" in query:
             speak("event summary sir ")
-            summary=get_audio().lower()
-            speak("start date ")
+            summary = get_audio().lower()
+            speak("say like on or from january 2nd event start date sir")
             startDate = get_audio().lower()
-            speak("end date ")
-            endDate=get_audio().lower()
-            service =googlecalenderfeatures.setEvent(summary,startDate,endDate)
-=======
+            speak("and event end date ")
+            endDate = get_audio().lower()
+            service = googlecalenderfeatures.set_event(summary, startDate, endDate)
 
-        elif 'activate alpha' in query :
+        elif "testing" in query:
+            print(googlecalenderfeatures.set_date("on january 2nd"))
+            break
+
+        elif 'activate alpha' in query:
             speak("Alpha mode activated")
-            query= get_audio()
+            query = get_audio()
             while True:
                 speak(wolframalph.wolframalphafunc(query))
                 query = get_audio().lower()
@@ -174,8 +174,7 @@ if __name__ =="__main__" :
                 else:
                     continue
 
-        elif 'please quit' in query :
+        elif 'please quit' in query:
             speak('GoodBye Sir....'
                   'hope we meet soon..')
             sys.exit()
->>>>>>> 01e5d42c7308d85ac2e876911b27ace92df01731
