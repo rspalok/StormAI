@@ -137,6 +137,12 @@ def getLangcode(dest):
         'fil': 'Filipino',
         'he': 'Hebrew'
     }
-    key_list = list(LANGUAGES.keys())
-    val_list = list(LANGUAGES.values())
-    return key_list[val_list.index(dest)]
+    try:
+        key_list = list(LANGUAGES.keys())
+        val_list = list(LANGUAGES.values())
+        return key_list[val_list.index(dest)]
+    except :
+        stormApp.speak("I couldn't find the language you mentioned..\n"
+                       "please repeat the langauage you want me to translate in..")
+        dest = stormApp.get_audio().lower()
+        return getLangcode(dest)
