@@ -6,7 +6,7 @@ import datetime
 import calendar
 import os
 from webbrowser import Chrome
-from googlesearch import search
+#from googlesearch import search
 
 def searchonWiki(query):
     return wikipedia.summary(query,sentences='2')
@@ -36,10 +36,10 @@ def Googlesearch(query = "What is python ?"):
 
 def getLinksfromgoogle(query):
     links = []
-    for link in search(query, num=10 ,stop =10 ):
-        print(link)
-        links.append(link)
-    return links
+    # for link in search(query, num=10 ,stop =10 ):
+    #     print(link)
+    #     links.append(link)
+    # return links
 
 
 

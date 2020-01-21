@@ -11,14 +11,10 @@ import features
 import wolframalph
 import googlecalenderfeatures
 import googlenewsfeatures
-<<<<<<< HEAD
-=======
+
 #import thunderstorm
 import googleTranslate
->>>>>>> df7d986e8255ba182410d25ef2c2c645c3729304
-
 # import thunderstorm
-
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -94,22 +90,13 @@ def wakeWord(text):
     return False
 
 
-<<<<<<< HEAD
-if __name__ == "__main__":
-    #wishMe()
-    print(features.getDate())
-    while True:
-        # query = get_audio().lower()
-        query = 'save my event'
-=======
 if __name__ =="__main__" :
-    #wishMe()
+    wishMe()
     print(features.getDate())
     while True :
         query = get_audio().lower()
-        #query = 'how are you man?? translate it'
+        #query = 'open my events'
 
->>>>>>> df7d986e8255ba182410d25ef2c2c645c3729304
         ### Logic based on query
         if 'wikipedia' in query:
             speak('searching that on wikipedia')
@@ -135,13 +122,11 @@ if __name__ =="__main__" :
             speak("Closed Chrome Browser")
 
 
-<<<<<<< HEAD
         elif 'tell me the weather' in query:
             speak('Of Which location Sir ?')
-=======
+
         elif 'tell me weather' in query :
             speak('of which location Sir ?')
->>>>>>> df7d986e8255ba182410d25ef2c2c645c3729304
             city_name = get_audio()
             features.getweather(city_name)
 
@@ -149,7 +134,7 @@ if __name__ =="__main__" :
             # googlecalenderfeatures.googleCalender()
             speak("how many event you want")
             query = get_audio().lower()
-            service = googlecalenderfeatures.googleCalender()
+            service = googlecalenderfeatures.google_calender()
             googlecalenderfeatures.get_events(query, service)
 
 
@@ -170,27 +155,23 @@ if __name__ =="__main__" :
             region = get_audio().lower()
             news_list = googlenewsfeatures.getgooglenews(5, region)
             speak("Presenting you todays headlines...")
-<<<<<<< HEAD
             for news in news_list:
                 print(news)
                 speak(news)
             speak("Presented todays headlines..")
 
-        elif "save my event" in query:
-=======
-            for news in news_list :
-                    print(news)
-                    speak(news)
-            speak("Presented todays headlines..")
-
+        # elif "save my event" in query:
+        #
+        #     for news in news_list :
+        #             print(news)
+        #             speak(news)
+        #     speak("Presented todays headlines..")
 
         elif "save my event" in query :
->>>>>>> df7d986e8255ba182410d25ef2c2c645c3729304
             speak("event summary sir ")
             summary = get_audio().lower()
             speak("say like on or from january 2nd event start date sir")
             startDate = get_audio().lower()
-<<<<<<< HEAD
             speak("and event end date ")
             endDate = get_audio().lower()
             service = googlecalenderfeatures.set_event(summary, startDate, endDate)
@@ -198,7 +179,6 @@ if __name__ =="__main__" :
         elif "testing" in query:
             print(googlecalenderfeatures.set_date("on january 2nd"))
             break
-=======
             speak("end date ")
             endDate=get_audio().lower()
             service =googlecalenderfeatures.setEvent(summary,startDate,endDate)
@@ -208,8 +188,6 @@ if __name__ =="__main__" :
             speak("In which language?")
             dest = get_audio().lower()
             speak(googleTranslate.langTranslator(statement,dest))
-
->>>>>>> df7d986e8255ba182410d25ef2c2c645c3729304
 
         elif 'activate alpha' in query:
             speak("Alpha mode activated")
@@ -223,18 +201,10 @@ if __name__ =="__main__" :
                 else:
                     continue
 
-<<<<<<< HEAD
         elif 'please quit' in query:
             speak('GoodBye Sir....'
                   'hope we meet soon..')
             sys.exit()
-=======
         
 
-        elif 'please quit' in query :
-            speak('GoodBye Sir....'
-                  'hope we meet soon..')
-            sys.exit()
 
-
->>>>>>> df7d986e8255ba182410d25ef2c2c645c3729304
