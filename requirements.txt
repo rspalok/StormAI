@@ -17,3 +17,5 @@ oauth2client
 googletrans
 soundcloud-lib
 Pillow
+tkinter
+pyinstaller
