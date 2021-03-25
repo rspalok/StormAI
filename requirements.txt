@@ -10,7 +10,7 @@ wikipedia
 selenium
 beautifulsoup4
 wolframalpha
-PyYAML==3.13
+PyYAML==5.4
 chatterbot==1.0.0
 chatterbot-corpus==1.2.0
 oauth2client
